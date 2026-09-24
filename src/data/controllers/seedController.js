@@ -3,6 +3,7 @@ import { STORAGE_KEYS, TRANSACTION_TYPES, ACCOUNT_TYPES } from '../../core/const
 import { todayStr, toDateStr } from '../../core/utils.js'
 import { loadAccounts, saveAccounts } from './accountController.js'
 import { saveTransactions } from './transactionController.js'
+import { saveTemplates } from './templateController.js'
 import { saveBudgets } from './budgetController.js'
 import { saveGoals } from './savingsGoalController.js'
 import { saveUser } from './userController.js'
@@ -106,6 +107,12 @@ export function seedDemoData() {
       targetDate: todayStr(120),
       savedAmount: 3600
     }
+  ])
+
+  saveTemplates([
+    { id: genId('tpl'), name: '早餐', type: TRANSACTION_TYPES.EXPENSE, accountId: alipay.id, amount: 15, category: '餐饮', note: '早餐', isLarge: false, createdAt: Date.now() },
+    { id: genId('tpl'), name: '地铁通勤', type: TRANSACTION_TYPES.EXPENSE, accountId: alipay.id, amount: 6, category: '交通', note: '地铁', isLarge: false, createdAt: Date.now() },
+    { id: genId('tpl'), name: '每月房租', type: TRANSACTION_TYPES.EXPENSE, accountId: bank.id, amount: 1800, category: '住房', note: '本月房租', isLarge: true, createdAt: Date.now() }
   ])
 
   saveUser({ name: '我的家庭', createdAt: new Date().toISOString(), currency: 'CNY' })

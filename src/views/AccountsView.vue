@@ -111,7 +111,11 @@ const submit = () => {
 }
 
 const remove = (acc) => {
-  if (accountApi.removeAccount(acc.id)) refreshKeys('accounts', 'transactions')
+  const affected = store.templates.filter((t) => t.accountId === acc.id)
+  const tip = affected.length
+    ? `\n注意：有 ${affected.length} 个快捷模板（${affected.map((t) => t.name).join('、')}）引用该账户，删除后首次使用时需重新指定账户。`
+    : ''
+  if (accountApi.removeAccount(acc.id, (msg) => window.confirm(msg + tip))) refreshKeys('accounts', 'transactions')
 }
 </script>
 
