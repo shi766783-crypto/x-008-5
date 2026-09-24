@@ -3,6 +3,7 @@ import { STORAGE_KEYS, TRANSACTION_TYPES, ACCOUNT_TYPES } from '../../core/const
 import { todayStr, toDateStr } from '../../core/utils.js'
 import { loadAccounts, saveAccounts } from './accountController.js'
 import { saveTransactions } from './transactionController.js'
+import { saveTemplates } from './templateController.js'
 import { saveBudgets } from './budgetController.js'
 import { saveGoals } from './savingsGoalController.js'
 import { saveUser } from './userController.js'
@@ -72,6 +73,22 @@ export function seedDemoData() {
   txs.push({ ...mk(TRANSACTION_TYPES.TRANSFER, bank.id, 3000, dateDaysAgo(5), '', '发工资后转入余额宝', false, alipay.id), accountId: undefined, fromAccountId: bank.id, toAccountId: alipay.id })
   txs.push({ ...mk(TRANSACTION_TYPES.TRANSFER, bank.id, 800, dateDaysAgo(2), '', '房租转账', false, alipay.id), accountId: undefined, fromAccountId: bank.id, toAccountId: alipay.id })
   saveTransactions(txs)
+
+  const tpl = (name, accountId, amount, category, note) => ({
+    id: genId('tpl'),
+    name,
+    type: TRANSACTION_TYPES.EXPENSE,
+    accountId,
+    amount,
+    category,
+    note,
+    createdAt: Date.now()
+  })
+  saveTemplates([
+    tpl('早餐', alipay.id, 15, '餐饮', '早餐'),
+    tpl('地铁通勤', alipay.id, 6, '交通', '地铁'),
+    tpl('每月房租', bank.id, 1800, '住房', '本月房租')
+  ])
 
   const now = new Date()
   const cur = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`

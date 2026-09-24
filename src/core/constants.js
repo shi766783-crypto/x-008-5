@@ -27,6 +27,7 @@ export const USER_ID = 'family'
 export const STORAGE_KEYS = {
   accounts: 'ffm.accounts',
   transactions: 'ffm.transactions',
+  templates: 'ffm.templates',
   budgets: 'ffm.budgets',
   savingsGoals: 'ffm.savingsGoals',
   user: 'ffm.user',
